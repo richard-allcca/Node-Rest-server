@@ -1,0 +1,107 @@
+[
+  {
+    "nombre": "richard",
+    "correo": "richard@hotmail.com",
+    "password": "123456",
+    "rol": "USER_ROLE",
+    "estado": true
+  },
+  {
+    "nombre": "cristina",
+    "correo": "cristina@hotmail.com",
+    "password": "123456",
+    "rol": "USER_ROLE",
+    "estado": true
+  },
+  {
+    "nombre": "abdiel",
+    "correo": "abdiel@hotmail.com",
+    "password": "123456",
+    "rol": "USER_ROLE",
+    "estado": true
+  },
+  {
+    "nombre": "amaia",
+    "correo": "amaia@hotmail.com",
+    "password": "123456",
+    "rol": "USER_ROLE",
+    "estado": true
+  },
+  {
+    "nombre": "avrill",
+    "correo": "avrill@hotmail.com",
+    "password": "123456",
+    "rol": "USER_ROLE",
+    "estado": true
+  },
+  {
+    "nombre": "elisa",
+    "correo": "elisa@hotmail.com",
+    "password": "123456",
+    "rol": "USER_ROLE",
+    "estado": true
+  },
+  {
+    "nombre": "test7",
+    "correo": "test7@hotmail.com",
+    "password": "123456",
+    "rol": "USER_ROLE",
+    "estado": true
+  },
+  {
+    "nombre": "test8",
+    "correo": "test8@hotmail.com",
+    "password": "123456",
+    "rol": "USER_ROLE",
+    "estado": true
+  },
+  {
+    "nombre": "test9",
+    "correo": "test9@hotmail.com",
+    "password": "123456",
+    "rol": "USER_ROLE",
+    "estado": true
+  },
+  {
+    "nombre": "test10",
+    "correo": "test10@hotmail.com",
+    "password": "123456",
+    "rol": "USER_ROLE",
+    "estado": true
+  },
+  {
+    "nombre": "test11",
+    "correo": "test11@hotmail.com",
+    "password": "123456",
+    "rol": "USER_ROLE",
+    "estado": true
+  },
+  {
+    "nombre": "test12",
+    "correo": "test12@hotmail.com",
+    "password": "123456",
+    "rol": "USER_ROLE",
+    "estado": true
+  },
+  {
+    "nombre": "test13",
+    "correo": "test13@hotmail.com",
+    "password": "123456",
+    "rol": "USER_ROLE",
+    "estado": true
+  },
+  {
+    "nombre": "test14",
+    "correo": "test14@hotmail.com",
+    "password": "123456",
+    "rol": "USER_ROLE",
+    "estado": true
+  },
+  {
+    "nombre": "test15",
+    "correo": "test15@hotmail.com",
+    "password": "123456",
+    "rol": "USER_ROLE",
+    "estado": true
+  }
+]

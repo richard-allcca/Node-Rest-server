@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <title>Google Sing-in</title>
+  </head>
+
+  <body>
+    <h1>Google Sing-in</h1>
+
+    <div
+    id="g_id_onload"
+    data-client_id="1044190291877-6u5q100tqq03bn2urqh9i23rhu4i2e6r.apps.googleusercontent.com"
+    data-auto_prompt="false"
+    data-callback="handleCredentialResponse"
+    ></div>
+    <div
+    class="g_id_signin"
+    data-type="standard"
+    data-size="large"
+    data-theme="outline"
+    data-text="sign_in_with"
+    data-shape="rectangular"
+    data-logo_alignment="left"
+    ></div>
+    <!-- ejemplo de código -->
+    <!-- https://developers.google.com/identity/gsi/web/guides/display-button -->
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+      function handleCredentialResponse(response) {
+        // decodeJwtResponse() is a custom function defined by you
+        // to decode the credential response.
+        console.log('id_token',response.credential);
+
+        // console.log("ID: " + responsePayload.sub);
+        // console.log('Full Name: ' + responsePayload.name);
+        // console.log('Given Name: ' + responsePayload.given_name);
+        // console.log('Family Name: ' + responsePayload.family_name);
+        // console.log("Image URL: " + responsePayload.picture);
+        // console.log("Email: " + responsePayload.email);
+      }
+    </script>
+
+  </body>
+</html>
