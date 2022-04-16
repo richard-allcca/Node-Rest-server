@@ -1,5 +1,5 @@
 const Role = require("../models/role.models");
-const Usuario = require("../models/usuarios.models");
+const { Usuario, Categoria, Producto } = require("../models");
 
 // POST
 const helperValidatorRol = async (rol = "") => {
@@ -16,14 +16,6 @@ const helperValidatorId = async (id) => {
   const findId = await Usuario.findById(id);
   if (!findId) throw new Error(`El usuario con el ID: " ${id} " no existe`);
 };
-// GET
-// ! sin uso intento fallido
-const helperValidatorPaginacion = async (limite, desde) => {
-  // const limiteIsNunber = typeof limite === "number"
-  // const desdeIsNumber = typeof desde === "number"
-  if (limite !== 3) throw new Error("Limite must be a number");
-  if (typeof desde !== "number") throw new Error("Desde must be a number");
-};
 // validacion envio requirido del password
 const helperValidatorPassword = async (password) => {
   const findPassword = await Usuario.find({ password });
@@ -31,12 +23,25 @@ const helperValidatorPassword = async (password) => {
     throw new Error(`El password: " ${password} " es incorrecto`);
 };
 
+// Validacion de ID valido de mongo para Categoria
+const helperValidatorIdMongoCategoria = async (id) => {
+  const findCategoria = await Categoria.findById(id);
+  if (!findCategoria) throw new Error(`La categoria: " ${id} " no existe`);
+};
+
+// Validacion de ID valido de mongo para Categoria
+const helperValidatorIdMongoProducto = async (id) => {
+  const findProducto = await Producto.findById(id);
+  if (!findProducto) throw new Error(`El Producto: " ${id} " no existe`);
+};
+
 module.exports = {
   helperValidatorRol,
   helperValidatorEmail,
   helperValidatorId,
   helperValidatorPassword,
-  helperValidatorPaginacion,
+  helperValidatorIdMongoCategoria,
+  helperValidatorIdMongoProducto,
 };
 
 // Notas:

@@ -10,6 +10,7 @@ const generarJWT = (uid = "") => {
       process.env.SECRETORPRIVATEKEY,
       {
         expiresIn: "365d",
+        // expiresIn: "5h",
       },
       (err, token) => {
         if (err) {
@@ -29,3 +30,4 @@ module.exports = {
 
 // Notas
 //! el payload solo sirve por un año (verifica o actualiza)
+// esta función se utiliza en auth.controller.js

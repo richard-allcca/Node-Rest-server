@@ -6,14 +6,15 @@ const {
   helperValidatorRol,
   helperValidatorEmail,
   helperValidatorId,
-  helperValidatorPaginacion,
 } = require("../helpers/helper-validations");
 
 // validaciones middlewares
-const {validarCampos,validarJwt,isAdminRol,tieneRol} = require("../middlewares")
-// const { validarCampos } = require("../middlewares/validar-campos");
-// const { validarJwt } = require("../middlewares/validar-jwt");
-// const { isAdminRol, tieneRol } = require("../middlewares/validar-roles");
+const {
+  validarCampos,
+  validarJwt,
+  isAdminRol, //? comentado en DELETE
+  tieneRol,
+} = require("../middlewares");
 
 // controladores de peticiones
 const {
@@ -22,11 +23,19 @@ const {
   UsuariosPost,
   UsuariosDelete,
   UsuariosPatch,
+  UsuariosGetOne,
 } = require("../controllers/usuarios.controller");
 
 const router = Router();
 
+/*
+ * {{url}}/api/users
+ */
+
+// ==========================================
 router.get("/", UsuariosGet);
+
+router.get("/:id", [validarCampos], UsuariosGetOne);
 
 router.post(
   "/",
@@ -60,8 +69,8 @@ router.delete(
   "/:id",
   [
     validarJwt,
-    // isAdminRol,
-    tieneRol("ADMIN_ROLE","USER_ROLE"),
+    // isAdminRol,//fuerza ser admin
+    tieneRol("ADMIN_ROLE", "USER_ROLE"), //pide tener algun rol de estos
     check("id", "No es un ID valido").isMongoId(),
     check("id").custom(helperValidatorId),
     validarCampos,

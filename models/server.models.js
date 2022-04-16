@@ -6,13 +6,19 @@ require("dotenv").config();
 const { dbConnection } = require("../database/config.db");
 
 class Server {
+
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
 
     // rutas end point
-    this.routUsers = "/api/users";
-    this.authPath = "/api/auth";
+    this.paths = {
+      auth:       "/api/auth",
+      buscar:     "/api/buscar",
+      categorias: "/api/categorias",
+      productos:  "/api/productos",
+      user:       "/api/users",
+    }
 
     // db
     this.conectarDatabase();
@@ -43,8 +49,12 @@ class Server {
 
   // ===============================
   routes() {
-    this.app.use(this.authPath, require("../routes/auth.routes"));
-    this.app.use(this.routUsers, require("../routes/usuarios.routes"));
+    this.app.use(this.paths.auth, require("../routes/auth.routes"));
+    this.app.use(this.paths.buscar,require("../routes/buscar.routes"));
+    this.app.use(this.paths.categorias, require("../routes/categories.routes"));
+    this.app.use(this.paths.productos, require("../routes/producto.routes"));
+    this.app.use(this.paths.user, require("../routes/usuarios.routes"));
+
   }
 
   // ===============================
@@ -62,7 +72,7 @@ module.exports = Server;
 // middleware:
 // 1. cors => evita erroes corss origin en los navegadores
 // 2. express.json() => cualquier data de put,push o delete la serializa a json
-// 3. express.static() => utiliza la capeta public para renderizar html
+// 3. express.static() => utiliza la carpeta public para renderizar html
 
 // routes:
 // - utiliza las rutas definidas en "routes"

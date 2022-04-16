@@ -5,14 +5,16 @@ const { Promise } = require("mongoose");
 // Schema Mongoose
 const Usuario = require("../models/usuarios.models");
 
+const UsuariosGetOne = async (req, res = response) => {
+  const { data } = req.query;
+  const usuario = await Usuario.find({ nombre: data });
+  res.json(usuario);
+};
+
 // ==========================================
 const UsuariosGet = async (req = request, res = response) => {
   const { limite = 5, desde = 0 } = req.query;
   const queryEstado = { estado: true };
-
-  // ! validacion de tipo number pendiente de mejora
-  // const usuarios = await Usuario.find(queryEstado)
-  // const total = await Usuario.countDocuments(queryEstado)
 
   const [total, usuarios] = await Promise.all([
     Usuario.countDocuments(queryEstado),
@@ -33,7 +35,7 @@ const UsuariosPost = async (req, res = response) => {
   const usuario = new Usuario({ nombre, correo, password, rol });
 
   // encriptar password(salt, numero de vueltas para hacer mas seguro el pass)
-  const salt = bcryptjs.genSaltSync(); // 10 por defecto
+  const salt = bcryptjs.genSaltSync(); // base 10 por defecto
   usuario.password = bcryptjs.hashSync(password, salt);
 
   await usuario.save(); // grabar los datos en db
@@ -48,11 +50,10 @@ const UsuariosPost = async (req, res = response) => {
 
 // ==========================================
 const UsuariosPut = async (req, res = response) => {
-  const { id } = req.params;
+  const { id } = req.params; // o req.query
   // extraer lo que no se debe modificar(validacion simple)
   const { _id, password, google, ...resto } = req.body;
 
-  //todo: Validar contra DB
   if (password) {
     // encriptar el password
     const salt = bcryptjs.genSaltSync();
@@ -75,12 +76,12 @@ const UsuariosPatch = (req, res = response) => {
 
 // ==========================================
 const UsuariosDelete = async (req, res = response) => {
-  const { id } = req.params;
+  const { id } = req.params; // o req.query
 
-  // borrar fisicamente(no recomendado)
+  //? borrar fisicamente(no recomendado)
   // const usuario = await Usuario.findByIdAndDelete(id);
 
-  // borrado con cambio de estado(recomendado)
+  //? borrado con cambio de estado(recomendado)
   const usuario = await Usuario.findByIdAndUpdate(id, { estado: false });
 
   // almacena el usuario autenticado por el middleware validar-jwt
@@ -99,6 +100,7 @@ module.exports = {
   UsuariosPut,
   UsuariosPatch,
   UsuariosDelete,
+  UsuariosGetOne,
 };
 
 // Notas:

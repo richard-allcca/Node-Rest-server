@@ -13,7 +13,7 @@ const validarJwt = async (req = request, res = response, next) => {
   }
 
   try {
-    // {udi} = payload: lo extraemos y pasamos como request para usarlo en usuarios.controller
+    // {udi} lo extraemos y pasamos como request para usarlo en usuarios.controller
     const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
 
     // leer el usuario que corresponde al uid

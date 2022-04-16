@@ -47,3 +47,25 @@
   a. Heroku config:unset nombre="data"
  5. Ver variables de entorno
     a. Heroku config
+
+## estructura del boton de login google
+
+[TUTORIAL - login](https://developers.google.com/identity/gsi/web)
+
+``` html
+      <div
+    id="g_id_onload"
+    data-client_id="1044190291877-6u5q100tqq03bn2urqh9i23rhu4i2e6r.apps.googleusercontent.com"
+    data-auto_prompt="false = evita que le muestre al user un msj pidiendo se autentique" 
+    data-callback="handleCredentialResponse"
+    ></div>
+    <div
+    class="g_id_signin"
+    data-type="standard"
+    data-size="large"
+    data-theme="outline"
+    data-text="sign_in_with"
+    data-shape="rectangular"
+    data-logo_alignment="left"
+    ></div>
+```
