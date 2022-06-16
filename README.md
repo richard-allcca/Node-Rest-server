@@ -14,7 +14,7 @@
 
 ## Recuerda
 
-- para reconstruir los modulos node
+- para reconstruir los módulos node
 
 ``` npm install ```
 
@@ -25,6 +25,8 @@
 - npm i cors
 - npm i bcryptjs
 - npm i express-validator
+- npm i express-fileupload
+- npm i uuid
 
 ## Flujo de Router
 
@@ -32,7 +34,7 @@
 - models: (server.js)
 - routes: (usuarios.routes.js)
 - controllers: (usuarios.controllers.js)
-- middlewares: (middleware.validation.users.js)
+- middleware: (middleware.validation.users.js)
 - helpers: (helperValidatorsRol.js)
 
 ## Enlaces Recursos
@@ -41,7 +43,7 @@
 
 - [Generator JWT](https://jwt.io/)
 
-- [Codigos de respuesta http](https://developer.mozilla.org/es/docs/Web/HTTP/Status)
+- [Códigos de respuesta http](https://developer.mozilla.org/es/docs/Web/HTTP/Status)
 
 ## Configurar Variables de Entorno Heroku
 
