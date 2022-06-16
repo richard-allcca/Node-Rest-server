@@ -35,6 +35,13 @@ const helperValidatorIdMongoProducto = async (id) => {
   if (!findProducto) throw new Error(`El Producto: " ${id} " no existe`);
 };
 
+// Colecciones permitidas para subir archivos
+const helperAllowedCollections = (coleccion = '', collections = []) => {
+  if (!collections.includes(coleccion))
+    throw new Error(`La coleccion: " ${coleccion} " no esta permitida`, collections);
+
+  return true;
+}
 module.exports = {
   helperValidatorRol,
   helperValidatorEmail,
@@ -42,6 +49,7 @@ module.exports = {
   helperValidatorPassword,
   helperValidatorIdMongoCategoria,
   helperValidatorIdMongoProducto,
+  helperAllowedCollections
 };
 
 // Notas:
