@@ -37,6 +37,7 @@ const helperValidatorIdMongoProducto = async (id) => {
 
 // Colecciones permitidas para subir archivos
 const helperAllowedCollections = (coleccion = '', collections = []) => {
+
   if (!collections.includes(coleccion))
     throw new Error(`La coleccion: " ${coleccion} " no esta permitida`, collections);
 

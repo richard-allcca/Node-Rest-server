@@ -1,6 +1,6 @@
-# Contenido (En Desarrollo) Falla
+# Contenido (En Desarrollo)
 
-- [Contenido (En Desarrollo) Falla](#contenido-en-desarrollo-falla)
+- [Contenido (En Desarrollo)](#contenido-en-desarrollo)
   - [Descripción](#descripción)
   - [Recuerda](#recuerda)
   - [Dependencies Utilizadas](#dependencies-utilizadas)
@@ -27,6 +27,7 @@
 - npm i express-validator
 - npm i express-fileupload
 - npm i uuid
+- npm i cloudinary
 
 ## Flujo de Router
 
