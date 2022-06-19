@@ -1,6 +1,6 @@
-# Contenido (En Desarrollo)
+# Contenido
 
-- [Contenido (En Desarrollo)](#contenido-en-desarrollo)
+- [Contenido](#contenido)
   - [Descripción](#descripción)
   - [Recuerda](#recuerda)
   - [Dependencies Utilizadas](#dependencies-utilizadas)
