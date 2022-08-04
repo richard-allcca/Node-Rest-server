@@ -4,7 +4,9 @@ const Usuario = require("../models/usuarios.models");
 const { generarJWT } = require("../helpers/generar-jwt");
 const { googleVerify } = require("../helpers/google-verify");
 
+
 const login = async (req, res = response) => {
+
   const { correo, password } = req.body;
 
   try {
@@ -21,7 +23,7 @@ const login = async (req, res = response) => {
 
     // verificar la contraseña
     const validPassword = bcryptjs.compareSync(password, usuario.password);
-    // console.log(password, validPassword, usuario.password);
+      // console.log(password, validPassword, usuario.password);
 
     if (!validPassword) {
       return res.status(400).json({ message: "Password incorrecto" });
@@ -44,6 +46,7 @@ const login = async (req, res = response) => {
 };
 
 const GoogleSingIn = async (req, res = response) => {
+
   const { id_token } = req.body;
   // console.log(id_token)
   try {
@@ -60,7 +63,7 @@ const GoogleSingIn = async (req, res = response) => {
         password: ":)",
         google: true,
       };
-      console.log("creacion de usuario")
+      // Creación de usuario
       usuario = new Usuario(data);
       await usuario.save();
     }

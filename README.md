@@ -27,6 +27,7 @@
 - npm i express-validator
 - npm i express-fileupload
 - npm i uuid
+- npm i google-auth-library --save
 - npm i cloudinary
 
 ## Flujo de Router
