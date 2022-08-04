@@ -45,7 +45,9 @@
 
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
-    <!--? ejemplo en documentación -->
+    <!--! ejemplo en documentación Nuevo Método -->
+
+    <!-- https://developers.google.com/identity/sign-in/web -->
     <!-- https://developers.google.com/identity/gsi/web/guides/display-button -->
 
     <script>
@@ -54,7 +56,8 @@
         
         const body = { id_token: response.credential };
 
-        fetch("http://localhost:8085/api/auth/google", {
+        fetch("https://api-rest-cafe-node.herokuapp.com", {
+        // fetch("http://localhost:8085/api/auth/google", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
