@@ -41,7 +41,7 @@ const UsuariosPost = async (req, res = response) => {
   await usuario.save(); // grabar los datos en db
 
   res.json({
-    msj: "post Api - controller",
+    msg: "post Api - controller",
     usuario,
   });
   // http://localhost:8080/api/users/
@@ -70,7 +70,7 @@ const UsuariosPut = async (req, res = response) => {
 // ==========================================
 const UsuariosPatch = (req, res = response) => {
   res.json({
-    msj: "patch Api - controller",
+    msg: "patch Api - controller",
   });
 };
 
@@ -88,7 +88,7 @@ const UsuariosDelete = async (req, res = response) => {
   const usuarioAuthentication = req.usuario;
 
   res.json({
-    msj: "El usuario fue eliminado",
+    msg: "El usuario fue eliminado",
     usuario,
     usuarioAuthentication,
   });

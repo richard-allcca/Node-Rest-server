@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 // modelos
 const usuariosModels = require("../models/usuarios.models");
 
+
 const validarJwt = async (req = request, res = response, next) => {
   const token = req.header("x-token");
 
@@ -45,4 +46,4 @@ module.exports = {
   validarJwt,
 };
 // Notas:
-// usando uid ln/17: se valida el usuario con el token no con el api/users/:id
+// usando uid ln/18: se valida el usuario con el token no con el api/users/:id

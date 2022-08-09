@@ -1,16 +1,21 @@
 const express = require("express");
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
+const { createServer } = require("http");
+
 require("dotenv").config();
 
 // connfig db
 const { dbConnection } = require("../database/config.db");
+const socketController = require("../sockets/controller.socket");
 
 class Server {
 
   constructor() {
     this.app = express();
     this.port = process.env.PORT || 8085;
+    this.server = createServer(this.app)
+    this.io = require("socket.io")(this.server);
 
     // rutas end point
     this.paths = {
@@ -30,6 +35,9 @@ class Server {
 
     // rutas de la app
     this.routes();
+
+    // sockets
+    this.socket();
   }
 
   // ===============================
@@ -68,8 +76,14 @@ class Server {
   }
 
   // ===============================
+  socket() {
+    this.io.on("connection", (socket) => socketController(socket, this.io));
+  }
+
+
+  // ===============================
   listen() {
-    this.app.listen(this.port, () => {
+    this.server.listen(this.port, () => {
       console.log(`Server escuchando en el puerto ${this.port}`);
     });
   }

@@ -7,6 +7,7 @@
   - [Flujo de Router](#flujo-de-router)
   - [Enlaces Recursos](#enlaces-recursos)
   - [Configurar Variables de Entorno Heroku](#configurar-variables-de-entorno-heroku)
+  - [Pendiente](#pendiente)
 
 ## Descripción
 
@@ -47,6 +48,8 @@
 
 - [Códigos de respuesta http](https://developer.mozilla.org/es/docs/Web/HTTP/Status)
 
+-[Identity sign in Google](https://developers.google.com/identity/sign-in/web)
+
 ## Configurar Variables de Entorno Heroku
 
  1. Ver si esta instalado
@@ -59,3 +62,7 @@
   a. Heroku config:unset nombre="data"
  5. Ver variables de entorno
     a. Heroku config
+
+## Pendiente
+
+- Crear un canal o pagina para mensajes privados del chat
