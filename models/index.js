@@ -4,8 +4,8 @@ const Usuario = require("./usuarios.models");
 const Producto = require("./producto.models");
 
 module.exports = {
-  Categoria,
-  Role,
-  Usuario,
-  Producto,
+   Categoria,
+   Role,
+   Usuario,
+   Producto,
 };

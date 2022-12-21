@@ -8,10 +8,10 @@ const subirArchivo = require('./subir-archivo');
 const comprobarJWT = require('./comprobar-jwt');
 
 module.exports = {
-  ...generarJwt,
-  ...googleVerify,
-  ...helperValidations,
-  ...helperBusquedas,
-  ...subirArchivo,
-  ...comprobarJWT
+   ...generarJwt,
+   ...googleVerify,
+   ...helperValidations,
+   ...helperBusquedas,
+   ...subirArchivo,
+   ...comprobarJWT
 }

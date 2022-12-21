@@ -5,8 +5,8 @@ const validarArchivoUpload = require("../middlewares/validar-archivo-upload");
 
 
 module.exports = {
-  ...validarCampos,
-  ...validarJwt,
-  ...validarRoles,
-  ...validarArchivoUpload
+   ...validarCampos,
+   ...validarJwt,
+   ...validarRoles,
+   ...validarArchivoUpload
 };

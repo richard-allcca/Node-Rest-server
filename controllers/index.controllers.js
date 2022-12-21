@@ -1,7 +1,7 @@
 const { buscar } = require("./buscar.controller");
 
 module.exports = {
-  buscar,
+   buscar,
 };
 
 // Notas:
