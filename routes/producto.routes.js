@@ -17,7 +17,7 @@ const { validarCampos, validarJwt, isAdminRol } = require("../middlewares");
 const router = Router();
 
 /*
- * {{url}}/api/producto
+ * {{url}}/api/productos
  */
 
 // Obtener todos los productos - publico

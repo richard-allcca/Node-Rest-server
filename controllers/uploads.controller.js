@@ -1,8 +1,8 @@
-const path = require('path')
-const fs = require('fs')
+const path = require('path');
+const fs = require('fs');
 
-const cloudinary = require('cloudinary').v2
-cloudinary.config(process.env.CLOUDINARY_URL)
+const cloudinary = require('cloudinary').v2;
+cloudinary.config(process.env.CLOUDINARY_URL);
 
 const { response } = require("express");
 const { subirArchivo } = require("../helpers");
@@ -17,25 +17,25 @@ const { Usuario, Producto } = require("../models");
  * @returns The name of the file that was uploaded.
  */
 const cargarArchivo = async (req, res = response) => {
-   //? no esta claro la utilidad de ese controldoe si ya tengo la carga de imagen en las colecciones respectivas
+  //? no esta claro la utilidad de ese controldoe si ya tengo la carga de imagen en las colecciones respectivas
 
-   try {
-      // subirArchivo, puede recibir 3 parametros el 1° es el archivo (obligatorio)
-      const nameFileSave = await subirArchivo(req.files)
+  try {
+    // subirArchivo, puede recibir 3 parametros el 1° es el archivo (obligatorio)
+    const nameFileSave = await subirArchivo(req.files);
 
-      res.json({
-         ok: true,
-         msg: `Archivo subido correctamente: ${nameFileSave}`,
-      })
+    res.json({
+      ok: true,
+      msg: `Archivo subido correctamente: ${nameFileSave}`,
+    });
 
-   } catch (error) {
-      return res.status(500).json({
-         ok: false,
-         msg: "Error al subir el archivo",
-      })
+  } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      msg: "Error al subir el archivo",
+    });
 
-   }
-}
+  }
+};
 
 
 
@@ -48,197 +48,197 @@ const cargarArchivo = async (req, res = response) => {
  */
 const actualizarImagen = async (req, res = response) => {
 
-   const { id, coleccion } = req.params;
+  const { id, coleccion } = req.params;
 
-   let modelo;
+  let modelo;
 
-   // valida id de img en su coleccion respectiva (usuarios, productos)
-   switch (coleccion) {
-      case 'usuarios':
-         modelo = await Usuario.findById(id);
-         if (!modelo) {
-            return res.status(400).json({
-               ok: false,
-               msg: `No existe un usuario con el id: ${id}`,
-            })
-         }
-
-         break;
-
-      case 'productos':
-         modelo = await Producto.findById(id);
-         if (!modelo) {
-            return res.status(400).json({
-               ok: false,
-               msg: `No existe un Producto con el id: ${id}`,
-            })
-         }
-
-         break;
-
-      default:
-         return res.status(500).json({
-            ok: false,
-            msg: `La coleccion "${coleccion}" no existe, se me olvido validar esto😅`,
-         })
-   }
-
-   // Limpiar imagenes previas
-   if (modelo.img) {
-      const pathImg = path.join(__dirname, '../uploads', coleccion, modelo.img)
-      if (fs.existsSync(pathImg)) {
-         fs.unlinkSync(pathImg)
+  // valida id de img en su coleccion respectiva (usuarios, productos)
+  switch (coleccion) {
+    case 'usuarios':
+      modelo = await Usuario.findById(id);
+      if (!modelo) {
+        return res.status(400).json({
+          ok: false,
+          msg: `No existe un usuario con el id: ${id}`,
+        });
       }
-   }
 
-   const nameFileSave = await subirArchivo(req.files, undefined, coleccion)
-   // agregar el nombre al modelo para agregarlo
-   modelo.img = nameFileSave;
+      break;
 
-   await modelo.save();
+    case 'productos':
+      modelo = await Producto.findById(id);
+      if (!modelo) {
+        return res.status(400).json({
+          ok: false,
+          msg: `No existe un Producto con el id: ${id}`,
+        });
+      }
 
-   res.json({
-      ok: true,
-      modelo
-   })
-}
+      break;
+
+    default:
+      return res.status(500).json({
+        ok: false,
+        msg: `La coleccion "${coleccion}" no existe, se me olvido validar esto😅`,
+      });
+  }
+
+  // Limpiar imagenes previas
+  if (modelo.img) {
+    const pathImg = path.join(__dirname, '../uploads', coleccion, modelo.img);
+    if (fs.existsSync(pathImg)) {
+      fs.unlinkSync(pathImg);
+    }
+  }
+
+  const nameFileSave = await subirArchivo(req.files, undefined, coleccion);
+  // agregar el nombre al modelo para agregarlo
+  modelo.img = nameFileSave;
+
+  await modelo.save();
+
+  res.json({
+    ok: true,
+    modelo
+  });
+};
 
 
 const mostrarImagen = async (req, res = response) => {
 
-   const { id, coleccion } = req.params;
+  const { id, coleccion } = req.params;
 
-   let modelo;
-   let pathImg;
-
-
-   switch (coleccion) {
+  let modelo;
+  let pathImg;
 
 
-      case 'usuarios':
-         modelo = await Usuario.findById(id);
-
-         if (!modelo) {
-            return res.status(400).json({
-               ok: false,
-               msg: `No existe ${coleccion} con el id: ${id}`,
-            })
-         }
-         // el usuario no tiene imagen
-         if (!modelo.img) {
-            return res.sendFile(path.join(__dirname, '../assets/no-image.jpg'))
-         }
-
-         pathImg = path.join(__dirname, '../uploads', coleccion, modelo.img);
-
-         // busca el archivo para enviarlo al cliente
-         if (fs.existsSync(pathImg)) {
-            return res.sendFile(pathImg)
-         }
-         break;
+  switch (coleccion) {
 
 
-      case 'productos':
-         modelo = await Producto.findById(id);
+    case 'usuarios':
+      modelo = await Usuario.findById(id);
 
-         if (!modelo) {
-            return res.status(400).json({
-               ok: false,
-               msg: `No existe ${coleccion} con el id: ${id}`,
-            })
-         }
-         // el producto no tiene imagen
-         if (!modelo.img) {
-            return res.sendFile(path.join(__dirname, '../assets/no-image.jpg'))
-         }
+      if (!modelo) {
+        return res.status(400).json({
+          ok: false,
+          msg: `No existe ${coleccion} con el id: ${id}`,
+        });
+      }
+      // el usuario no tiene imagen
+      if (!modelo.img) {
+        return res.sendFile(path.join(__dirname, '../assets/no-image.jpg'));
+      }
 
-         pathImg = path.join(__dirname, '../uploads', coleccion, modelo.img);
+      pathImg = path.join(__dirname, '../uploads', coleccion, modelo.img);
 
-         // busca el archivo para enviarlo al cliente
-         if (fs.existsSync(pathImg)) {
-            return res.sendFile(pathImg)
-         }
-         break;
-
-      default:
-
-         // pathImg = path.join(__dirbane,'../assets/no-img.png');
-         // return res.sendFile(pathImg)
-         return res.status(500).json({
-            msg: '😅 se me olvido programar eso'
-         })
-   }
+      // busca el archivo para enviarlo al cliente
+      if (fs.existsSync(pathImg)) {
+        return res.sendFile(pathImg);
+      }
+      break;
 
 
-   res.json({
-      msg: 'Falta el placeholder de la imagen'
-   })
-}
+    case 'productos':
+      modelo = await Producto.findById(id);
+
+      if (!modelo) {
+        return res.status(400).json({
+          ok: false,
+          msg: `No existe ${coleccion} con el id: ${id}`,
+        });
+      }
+      // el producto no tiene imagen
+      if (!modelo.img) {
+        return res.sendFile(path.join(__dirname, '../assets/no-image.jpg'));
+      }
+
+      pathImg = path.join(__dirname, '../uploads', coleccion, modelo.img);
+
+      // busca el archivo para enviarlo al cliente
+      if (fs.existsSync(pathImg)) {
+        return res.sendFile(pathImg);
+      }
+      break;
+
+    default:
+
+      // pathImg = path.join(__dirbane,'../assets/no-img.png');
+      // return res.sendFile(pathImg)
+      return res.status(500).json({
+        msg: '😅 se me olvido programar eso'
+      });
+  }
+
+
+  res.json({
+    msg: 'Falta el placeholder de la imagen'
+  });
+};
 
 
 const actualizarImagenCloudinary = async (req, res = response) => {
 
-   const { id, coleccion } = req.params;
+  const { id, coleccion } = req.params;
 
-   let modelo;
+  let modelo;
 
-   // valida id de img en su coleccion respectiva (usuarios, productos)
-   switch (coleccion) {
-      case 'usuarios':
-         modelo = await Usuario.findById(id);
-         if (!modelo) {
-            return res.status(400).json({
-               ok: false,
-               msg: `No existe un usuario con el id: ${id}`,
-            })
-         }
+  // valida id de img en su coleccion respectiva (usuarios, productos)
+  switch (coleccion) {
+    case 'usuarios':
+      modelo = await Usuario.findById(id);
+      if (!modelo) {
+        return res.status(400).json({
+          ok: false,
+          msg: `No existe un usuario con el id: ${id}`,
+        });
+      }
 
-         break;
+      break;
 
-      case 'productos':
-         modelo = await Producto.findById(id);
-         if (!modelo) {
-            return res.status(400).json({
-               ok: false,
-               msg: `No existe un Producto con el id: ${id}`,
-            })
-         }
+    case 'productos':
+      modelo = await Producto.findById(id);
+      if (!modelo) {
+        return res.status(400).json({
+          ok: false,
+          msg: `No existe un Producto con el id: ${id}`,
+        });
+      }
 
-         break;
+      break;
 
-      default:
-         return res.status(500).json({
-            ok: false,
-            msg: `La coleccion "${coleccion}" no existe, se me olvido validar esto😅`,
-         })
-   }
+    default:
+      return res.status(500).json({
+        ok: false,
+        msg: `La coleccion "${coleccion}" no existe, se me olvido validar esto😅`,
+      });
+  }
 
-   // Limpiar imagenes previas
-   if (modelo.img) {
-      const nombreArr = modelo.img.split('/');
-      const nombre = nombreArr[ nombreArr.length - 1 ];
-      const [ public_id ] = nombre.split('.');
+  // Limpiar imagenes previas
+  if (modelo.img) {
+    const nombreArr = modelo.img.split('/');
+    const nombre = nombreArr[nombreArr.length - 1];
+    const [public_id] = nombre.split('.');
 
-      cloudinary.uploader.destroy(public_id);
-   }
+    cloudinary.uploader.destroy(public_id);
+  }
 
-   const { tempFilePath } = req.files.archivo;
-   const resp = await cloudinary.uploader.upload(tempFilePath)
-   const { secure_url } = resp;
-   // const  nameFileSave = await subirArchivo(req.files, undefined, coleccion)
+  const { tempFilePath } = req.files.archivo;
+  const resp = await cloudinary.uploader.upload(tempFilePath);
+  const { secure_url } = resp;
+  // const  nameFileSave = await subirArchivo(req.files, undefined, coleccion)
 
-   // agregar url al modelo
-   modelo.img = secure_url;
+  // agregar url al modelo
+  modelo.img = secure_url;
 
-   await modelo.save();
+  await modelo.save();
 
-   res.json(modelo)
-}
+  res.json(modelo);
+};
 
 
 module.exports = {
-   cargarArchivo,
-   actualizarImagen,
-   mostrarImagen,
-   actualizarImagenCloudinary
-}
+  cargarArchivo,
+  actualizarImagen,
+  mostrarImagen,
+  actualizarImagenCloudinary
+};

@@ -4,6 +4,11 @@ const { check } = require("express-validator");
 
 const router = Router();
 
+/**
+ * {{url}}/api/buscar/usuarios/richard
+ * http://localhost:8085/api/buscar/usuarios/richard
+ */
+
 router.get("/:coleccion/:termino", buscar);
 
 router.post("/", (req, res) => {});
