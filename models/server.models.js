@@ -17,71 +17,59 @@ class Server {
     this.server = createServer(this.app);
     this.io = require("socket.io")(this.server);
 
-    // rutas end point
+    // rutas end-point
     this.paths = {
       auth: "/api/auth",
       buscar: "/api/buscar",
       categorias: "/api/categorias",
       productos: "/api/productos",
-      user: "/api/users",
       uploads: "/api/uploads",
+      user: "/api/users",
     };
 
-    // db
+    // Middlewares
     this.conectarDatabase();
 
-    // middlewares
     this.middleware();
 
-    // rutas de la app
     this.routes();
 
-    // sockets
     this.socket();
   }
 
-  // ===============================
   async conectarDatabase() {
     await dbConnection();
   }
 
-  // ===============================
   middleware() {
-    // cors
     this.app.use(cors());
 
-    // Lectura y parseo del body
+    // serializa data del body en POST, PUT para uso en controladores con req
     this.app.use(express.json());
 
-    // Directorio publico static
+    // Directorio publico, se muestra con localhost:8085
     this.app.use(express.static("public"));
 
-    // Carga de archivos
-    this.app.use(fileUpload({
+    this.app.use(fileUpload({ // Carga de archivos
       useTempFiles: true,
       tempFileDir: "./tmp",
       createParentPath: true,
     }));
   }
 
-  // ===============================
   routes() {
     this.app.use(this.paths.auth, require("../routes/auth.routes"));
     this.app.use(this.paths.buscar, require("../routes/buscar.routes"));
     this.app.use(this.paths.categorias, require("../routes/categories.routes"));
     this.app.use(this.paths.productos, require("../routes/producto.routes"));
-    this.app.use(this.paths.user, require("../routes/usuarios.routes"));
     this.app.use(this.paths.uploads, require("../routes/uploads.routes"));
-
+    this.app.use(this.paths.user, require("../routes/usuarios.routes"));
   }
 
-  // ===============================
   socket() {
     this.io.on("connection", (socket) => socketController(socket, this.io));
   }
 
-
-  // ===============================
   listen() {
     this.server.listen(this.port, () => {
       console.log(`Server escuchando en el puerto ${this.port}`);

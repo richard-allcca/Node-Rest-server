@@ -1,7 +1,6 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
 
-// const { validarCampos } = require("../middlewares/validar-campos");
 const { validarJwt, validarCampos } = require("../middlewares");
 
 const {
@@ -37,8 +36,7 @@ router.post(
 router.get(
   "/",
   [
-    /* A middleware that validates the token. */
-    validarJwt,
+    validarJwt, // validate the token.
   ],
   renovarToken
 );
