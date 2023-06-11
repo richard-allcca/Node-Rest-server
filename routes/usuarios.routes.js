@@ -28,19 +28,16 @@ const router = Router();
 
 // NOTE
 // midlewares: mas de 1 se declaran en []
-// check: express-validator, valida params y contenido de req.body
 
+router.get("/:nombre", UsuariosGetOne);
 
 router.get("/",
   [
-    check("desde").custom(helperValidatorNumber),
-    check("limite").custom(helperValidatorNumber),
+    check("desde").optional().custom(helperValidatorNumber),
+    check("limite").optional().custom(helperValidatorNumber),
     validarCampos,
   ],
   UsuariosGet);
-
-// REVIEW - RUTA SIN USO PARA, TRAER UNO SOLO CREA OTRO PATH EN SERVER
-// router.get("/", UsuariosGetOne);
 
 router.post(
   "/",

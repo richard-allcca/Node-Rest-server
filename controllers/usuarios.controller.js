@@ -6,19 +6,24 @@ const { Promise } = require("mongoose");
 const Usuario = require("../models/usuarios.models");
 
 
-// NOTE - controller sin uso
+
 const UsuariosGetOne = async (req, res = response) => {
-  const { nombre } = req.query;
+  const { nombre } = req.params;
 
-  // STUB - valida el estado para traer usuario
-  const result = await Usuario.find({ nombre: nombre, estado: false });
+  const usuario = await Usuario.find({ nombre: nombre, estado: true });
 
-  // const usuario = await Usuario.find({ nombre: nombre });
-  // res.json(usuario);
+  if (usuario.length == 0) {
+    res.status(400).json({
+      ok: false,
+      msg: `El usuario "${nombre}" no fue encontrado`,
+    });
+  }
+
+  res.json(usuario);
 };
 
 const UsuariosGet = async (req = request, res = response) => {
-  const { limite = 5, desde = 0 } = req.query;
+  const { limite = 10, desde = 0 } = req.query;
   const queryEstado = { estado: true };
 
   const [total, usuarios] = await Promise.all([
@@ -29,7 +34,6 @@ const UsuariosGet = async (req = request, res = response) => {
     total,
     usuarios,
   });
-  // http://localhost:8080/api/users?q=hola&nombre=fernando&apiKey=12344546&limit=18
 };
 
 const UsuariosPost = async (req, res = response) => {
