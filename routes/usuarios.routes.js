@@ -1,22 +1,20 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
 
-// validaciones helpers
 const {
   helperValidatorRol,
   helperValidatorEmail,
   helperValidatorId,
+  helperValidatorNumber,
 } = require("../helpers/helper-validations");
 
-// validaciones middlewares
 const {
   validarCampos,
   validarJwt,
-  isAdminRol, //? comentado en DELETE
+  isAdminRol,
   tieneRol,
 } = require("../middlewares");
 
-// controladores de peticiones
 const {
   UsuariosGet,
   UsuariosPut,
@@ -28,29 +26,27 @@ const {
 
 const router = Router();
 
-// Notas:
+// NOTE
 // midlewares: mas de 1 se declaran en []
-// check: express-validator, valida params url o el contenido en req.body
-// isEmpty() valida que este vacio
-// not().isEmpty(): juntos validan que no este vacio,
-// custom: permite usar validaciones propias
-// validarCampos: lo utilizamos para validar los campos del modelo
+// check: express-validator, valida params y contenido de req.body
 
-/*
- * {{url}}/api/users
- */
 
-router.get("/", UsuariosGet);
+router.get("/",
+  [
+    check("desde").custom(helperValidatorNumber),
+    check("limite").custom(helperValidatorNumber),
+    validarCampos,
+  ],
+  UsuariosGet);
 
-router.get("/:id", [validarCampos], UsuariosGetOne);
+// REVIEW - RUTA SIN USO PARA, TRAER UNO SOLO CREA OTRO PATH EN SERVER
+// router.get("/", UsuariosGetOne);
 
 router.post(
   "/",
   [
     check("nombre", "El Nombre es Obligatorio").not().isEmpty(),
-    check("password", "El Password debe tener más de 6 caracteres").isLength({
-      min: 6,
-    }),
+    check("password", "Password minimo 6 caracteres").isLength({ min: 6 }),
     check("correo").custom(helperValidatorEmail),
     check("rol").custom(helperValidatorRol),
     validarCampos,
@@ -65,6 +61,7 @@ router.put(
   [
     check("id", "No es un ID valido").isMongoId(),
     check("id").custom(helperValidatorId),
+    check("rol").custom(helperValidatorRol),
     validarCampos,
   ],
   UsuariosPut
@@ -76,8 +73,8 @@ router.delete(
   "/:id",
   [
     validarJwt,
-    // isAdminRol,//fuerza ser admin
-    tieneRol("ADMIN_ROLE", "USER_ROLE"), //pide tener algun rol de estos
+    // isAdminRol,
+    tieneRol("ADMIN_ROLE", "USER_ROLE"),
     check("id", "No es un ID valido").isMongoId(),
     check("id").custom(helperValidatorId),
     validarCampos,

@@ -23,7 +23,3 @@ module.exports = {
   dbConnection,
 };
 
-// Notas:
-//? Importante: para usar variables de entorno "process.env"
-// "dotenv": la importacion queda pendiente de ver si es necesario
-// obj de opciones para conectar no utiliza "useCreateIndex" & "useFindAndModify"

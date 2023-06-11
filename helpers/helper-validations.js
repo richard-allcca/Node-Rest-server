@@ -1,5 +1,9 @@
-const Role = require("../models/role.models");
-const { Usuario, Categoria, Producto } = require("../models");
+const { Usuario, Categoria, Producto, Role } = require("../models");
+
+const helperValidatorNumber = (value) => {
+  let convert = Number(value);
+  if (!isNaN(convert)) return `El "${value}" no es un numero valido`;
+};
 
 // POST
 const helperValidatorRol = async (rol = "") => {
@@ -16,20 +20,20 @@ const helperValidatorId = async (id) => {
   const findId = await Usuario.findById(id);
   if (!findId) throw new Error(`El usuario con el ID: " ${id} " no existe`);
 };
-// validacion envio requirido del password
+// validacion password required
 const helperValidatorPassword = async (password) => {
   const findPassword = await Usuario.find({ password });
   if (!findPassword)
     throw new Error(`El password: " ${password} " es incorrecto`);
 };
 
-// Validacion de ID valido de mongo para Categoria
+// Verfica ID valido de mongo para Categoria
 const helperValidatorIdMongoCategoria = async (id) => {
   const findCategoria = await Categoria.findById(id);
   if (!findCategoria) throw new Error(`La categoria: " ${id} " no existe`);
 };
 
-// Validacion de ID valido de mongo para Categoria
+// Verfica ID valido de mongo para Producto
 const helperValidatorIdMongoProducto = async (id) => {
   const findProducto = await Producto.findById(id);
   if (!findProducto) throw new Error(`El Producto: " ${id} " no existe`);
@@ -44,6 +48,7 @@ const helperAllowedCollections = (coleccion = '', collections = []) => {
   return true;
 };
 module.exports = {
+  helperValidatorNumber,
   helperValidatorRol,
   helperValidatorEmail,
   helperValidatorId,
@@ -52,11 +57,3 @@ module.exports = {
   helperValidatorIdMongoProducto,
   helperAllowedCollections
 };
-
-// Notas:
-// helpersValidatorRol: usado en (usuarios.routes) ln/25
-// helpersValidatorRol: valida que exista el "rol", en el documento "roles" de la DB
-// para crear "helperValidatorRol" creamos un Shema de rol (role.models.js)
-
-// helperValidatorEmail: valida correo repetido, en el documento "usuarios" de la DB
-// helperValidatorEmail: utiliza el Shema de usuarios para su validacion (usuarios.models.js)

@@ -6,10 +6,15 @@ const { Promise } = require("mongoose");
 const Usuario = require("../models/usuarios.models");
 
 
+// NOTE - controller sin uso
 const UsuariosGetOne = async (req, res = response) => {
-  const { data } = req.query;
-  const usuario = await Usuario.find({ nombre: data });
-  res.json(usuario);
+  const { nombre } = req.query;
+
+  // STUB - valida el estado para traer usuario
+  const result = await Usuario.find({ nombre: nombre, estado: false });
+
+  // const usuario = await Usuario.find({ nombre: nombre });
+  // res.json(usuario);
 };
 
 const UsuariosGet = async (req = request, res = response) => {
@@ -24,12 +29,11 @@ const UsuariosGet = async (req = request, res = response) => {
     total,
     usuarios,
   });
-  // Usuarios.get: usa destructuring del query y obtener solo lo necesario
   // http://localhost:8080/api/users?q=hola&nombre=fernando&apiKey=12344546&limit=18
 };
 
 const UsuariosPost = async (req, res = response) => {
-  // obtiene datos de la petición
+  // obtiene solo datos necesarios y validos
   const { nombre, correo, password, rol } = req.body;
   // crea un usuario usando el Schema
   const usuario = new Usuario({ nombre, correo, password, rol });
@@ -55,14 +59,16 @@ const UsuariosPut = async (req, res = response) => {
   const { _id, password, google, ...resto } = req.body;
 
   if (password) {
-    const salt = bcryptjs.genSaltSync();// encriptar el password
+    const salt = bcryptjs.genSaltSync();// encryption type, default base 10
     resto.password = bcryptjs.hashSync(password, salt);
   }
 
-  // busca por id y actualiza
   const usuario = await Usuario.findByIdAndUpdate(id, resto);
 
-  res.json(usuario);
+  res.json({
+    msg: 'Usuario Actualizado',
+    usuario
+  });
   // http://localhost:8080/api/users/4
 };
 
