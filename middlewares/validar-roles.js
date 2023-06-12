@@ -1,5 +1,8 @@
 const { response } = require("express");
 
+// NOTE
+// estos middleware utilizan el usuario de 'validarJwt' que viene en 'req'
+
 const isAdminRol = (req, res = response, next) => {
   if (!req.usuario) {
     return res
@@ -20,7 +23,7 @@ const isAdminRol = (req, res = response, next) => {
 
 const tieneRol = (...roles) => {
   return (req, res = response, next) => {
-    console.log(roles, req.usuario.rol);
+    // console.log(roles, req.usuario.rol);
     if (!req.usuario) {
       return res
         .status(500)
@@ -42,5 +45,3 @@ module.exports = {
   tieneRol,
 };
 
-// Notas:
-// este middleware utiliza la data del usuario que genero "validarJwt", la extraemos de "req"

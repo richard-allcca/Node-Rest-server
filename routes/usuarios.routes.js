@@ -66,6 +66,8 @@ router.put(
 
 router.patch("/", UsuariosPatch);
 
+// NOTE - Ruta para usuarios con TOKEN generado en login
+
 router.delete(
   "/:id",
   [

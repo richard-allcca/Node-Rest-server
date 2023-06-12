@@ -91,12 +91,13 @@ const UsuariosDelete = async (req, res = response) => {
   // borrado con cambio de estado(recomendado)
   const usuario = await Usuario.findByIdAndUpdate(id, { estado: false });
 
+  // Usuario authenticado en con token
   const authenticadedUser = req.usuario;
 
   res.json({
     msg: "El usuario fue eliminado",
     usuario,
-    usuarioAuthentication: authenticadedUser,
+    usuarioAuthenticado: authenticadedUser,
   });
 };
 

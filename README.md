@@ -8,16 +8,16 @@
 
     npm run start
 
-- Recuerda asegurate tener las variables de entorno `.env`
+- Recuerda asegurate crear las variables de entorno `.env`
 
 ## Contenido
 
 - [Contenido](#contenido)
 - [Descripción](#descripción)
 - [Dependencies Utilizadas](#dependencies-utilizadas)
-- [Flujo de Router](#flujo-de-router)
 - [Enlaces Recursos](#enlaces-recursos)
-- [Configurar Variables de Entorno Heroku](#configurar-variables-de-entorno-heroku)
+- [Enpoints Usuarios](#endpoints-usuarios)
+- [Enpoints Login](#endpoint-login)
 - [Pendiente](#pendiente)
 
 ## Descripción
@@ -74,6 +74,21 @@
 - `Eliminar` Usuario
 
       DELETE - localhost:8085/api/users/[mongo_id]
+
+      header:
+      {
+        "x-token": "[TOKEN]"
+      }
+
+## Endpoint Login
+
+- `Login con Email y Password`
+
+    http:localhost:8085/api/auth/login
+    {
+      "correo":"richardYcris",
+      "password":"123456"
+    }
 
 ## Pendiente
 

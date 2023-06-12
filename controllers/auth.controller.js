@@ -1,8 +1,10 @@
 const { response } = require("express");
 const bcryptjs = require("bcryptjs");
+
 const Usuario = require("../models/usuarios.models");
-const { generarJWT } = require("../helpers/generar-jwt");
-const { googleVerify } = require("../helpers/google-verify");
+
+const { generarJWT, googleVerify } = require("../helpers/");
+
 
 const login = async (req, res = response) => {
   const { correo, password } = req.body;
@@ -14,14 +16,14 @@ const login = async (req, res = response) => {
       return res.status(400).json({ msg: "Correo incorrecto no existe" });
     }
 
-    // si el usuario esta activo
+    // verifica usuario activo
     if (!usuario.estado) {
       return res.status(400).json({ msg: "Usuario incorrecto no existe" });
     }
 
-    // verificar la contraseña
+    // verificar password
     const validPassword = bcryptjs.compareSync(password, usuario.password);
-    // console.log(password, validPassword, usuario.password);
+
     if (!validPassword) {
       return res.status(400).json({ msg: "Password incorrecto" });
     }

@@ -2,6 +2,9 @@ const { OAuth2Client } = require("google-auth-library");
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
+// NOTE
+// document: https://developers.google.com/identity/gsi/web/guides/verify-google-id-token
+
 async function googleVerify(token = "") {
 
   const ticket = await client.verifyIdToken({
@@ -23,5 +26,3 @@ module.exports = {
   googleVerify,
 };
 
-// Notas:
-// document: https://developers.google.com/identity/gsi/web/guides/verify-google-id-token

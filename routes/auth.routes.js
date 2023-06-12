@@ -11,9 +11,6 @@ const {
 
 const router = Router();
 
-// http:localhost:8085/api/auth/
-// {"correo":"richardYcris", "password":"123456"}
-
 router.post(
   "/login",
   [

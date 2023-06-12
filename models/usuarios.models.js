@@ -43,7 +43,6 @@ UsuarioSchema.methods.toJSON = function () {
 };
 
 // NOTE
-// model(nameModelandColeccion, nameShema) - crea el modelo
 // Nombre de modelo en singular (mongoose le agrega la 's' al final)
 module.exports = model("Usuario", UsuarioSchema);
 
