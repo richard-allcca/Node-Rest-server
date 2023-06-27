@@ -5,7 +5,7 @@ const Usuario = require("../models/usuarios.models");
 
 const { generarJWT, googleVerify } = require("../helpers/");
 
-
+// EMAIL AND PASSWORD
 const login = async (req, res = response) => {
   const { correo, password } = req.body;
 
@@ -18,6 +18,7 @@ const login = async (req, res = response) => {
 
     // verifica usuario activo
     if (!usuario.estado) {
+      console.log(usuario);
       return res.status(400).json({ msg: "Usuario incorrecto no existe" });
     }
 
@@ -28,7 +29,7 @@ const login = async (req, res = response) => {
       return res.status(400).json({ msg: "Password incorrecto" });
     }
 
-    // generar el jwt
+    // generar TOKEN
     const token = await generarJWT(usuario.id);
 
     res.json({
@@ -52,7 +53,7 @@ const GoogleSingIn = async (req, res = response) => {
 
     let usuario = await Usuario.findOne({ correo });
 
-    //si no existe el usuario crea uno nuevo
+    // Create user
     if (!usuario) {
       const data = {
         nombre,
@@ -62,19 +63,16 @@ const GoogleSingIn = async (req, res = response) => {
         google: true,
         rol: "USER_ROLE"
       };
-      // Creación de usuario
       usuario = new Usuario(data);
       await usuario.save();
     }
 
     if (!usuario.estado) {
-      // valida el estado del usuario en la db
       return res
         .status(401)
         .json({ msg: "Hable con el Admin, Usuario Bloqueado" });
     }
 
-    // generar el jwt
     const token = await generarJWT(usuario.id);
 
     res.json({

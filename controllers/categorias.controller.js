@@ -21,6 +21,7 @@ const obtenerCategorias = async (req, res = response) => {
 
 const obtenerCategoria = async (req, res = response) => {
   const { id } = req.params;
+  // populate - permite llenar ciertas partes del documento desde otra colección.
   const categoria = await Categoria.findById(id).populate("usuario", "nombre");
   // .exec();
 
@@ -38,17 +39,16 @@ const crearCategoria = async (req, res = response) => {
   // const categoria = new Categoria({nombre});
   const categoriaDB = await Categoria.findOne({ nombre });
 
-  // console.log(categoriaDB)
   if (categoriaDB) {
     return res.status(400).json({
       msg: `La categoria ${categoriaDB.nombre}, ya existe`,
     });
   }
 
-  // Generar la data a guardar
+  // Generar la data a guardar (filtrar solo campos permitidos)
   const data = {
     nombre,
-    usuario: req.usuario._id,
+    usuario: req.usuario._id, // id del token verificado en validar-jwt
   };
 
   const categoria = new Categoria(data);
@@ -77,7 +77,7 @@ const eliminarCategoria = async (req, res = response) => {
   const categoriaBorrada = await Categoria.findByIdAndUpdate(
     id,
     { estado: false },
-    { new: true }
+    { new: true } // retorna el objeto actualizado
   );
 
   res.json({
@@ -92,6 +92,3 @@ module.exports = {
   actualizarCategoria,
   eliminarCategoria,
 };
-
-// Notas:
-// 1. {new:true} ln/70 (actualizarCategoria) para que retorne el objeto actualizado

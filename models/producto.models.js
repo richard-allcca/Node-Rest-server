@@ -22,8 +22,8 @@ const ProductoSchema = Schema({
     default: 0,
   },
   categoria: {
-    type: Schema.Types.ObjectId,
-    ref: "Categoria",
+    type: Schema.Types.ObjectId, // typo para hacer referencia
+    ref: "Categoria", // Referencia a schema
     required: true,
   },
   descripcion: { type: String, default: "" },

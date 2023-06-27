@@ -1,62 +1,114 @@
 const { request, response } = require("express");
-
 const jwt = require("jsonwebtoken");
-
 const { Usuario } = require("../models");
 
-//  REVIEW - Se valida token del usuario que desea eleminar a otro
-// "ADMIN_ROLE" y "USER_ROLE" pueden eliminar users
-// Modifica auth.route para que solo "ADMIN_ROLE" puedan eliminar
-
-
 const validarJwt = async (req = request, res = response, next) => {
-  const token = req.header("x-token");
-  const {id} = req.params // id user to delete
+	const token = req.header("x-token");
+	const { id } = req.params; // id user to delete
+	const { method, originalUrl } = req;
 
-  if (!token) {
-    return res
-      .status(401)
-      .json({ message: "No hay token en la petición." });
-  }
+	if (!token) {
+		return res.status(401).json({ message: "No hay token en la petición." });
+	}
 
-  try {
+	try {
+		// Valida el TOKEN generado en el login con contraseña (ENCRIPTADOS)
+		const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
 
-    // Valida de TOKEN generados en login con pass (ENCRIPTADOS)
-    const {uid} = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
+		if (method === "DELETE" && originalUrl.includes("/api/users/")) {
+			const [usuario, userToDelete] = await Promise.all([
+				Usuario.findById(uid),
+				Usuario.findById(id),
+			]);
 
-    const [usuario, userToDelete] = await Promise.all([
-      Usuario.findById(uid),
-      Usuario.findById(id)
-    ])
+			if (!userToDelete || !userToDelete.estado) {
+				return res
+					.status(401)
+					.json({ message: "Id no válido - usuario no existe en la DB." });
+			}
+		}
+    //  else if (method === "POST" && originalUrl.includes("/api/categorias")) {
+		// 	// No se requieren validaciones adicionales para la creación de categorías
+		// } else if (method === "PUT" && originalUrl.includes("/api/categorias")) {
+		// 	// No se requieren validaciones adicionales para la actualización de categorías
+		// } else if (method === "DELETE" && originalUrl.includes("/api/categorias")) {
+		// 	// No se requieren validaciones adicionales para la actualización de categorías
+		// } else {
+		// 	// Manejar cualquier otro tipo de petición o URL no esperada
+		// 	return res.status(400).json({ error: "Petición inválida." });
+		// }
 
-    // validación de estado de usuario que sera eliminado
-    if (!userToDelete.estado) {
-      return res
-        .status(401)
-        .json({ message: "Id no valido - usuario no existe en DB" });
-    }
+		const usuario = await Usuario.findById(uid);
 
-    // valida estado de usuario authenticado
-    if (!usuario.estado) {
-      return res
-        .status(401)
-        .json({ message: "Token no valido - user status false" });
-    }
+		if (!usuario || !usuario.estado) {
+			return res
+				.status(401)
+				.json({ message: "Token inválido - Estado del usuario." });
+		}
 
-    // Almacena usuario authenticado en el request
-    req.usuario = usuario;
-
-    next();
-
-  } catch (error) {
-    console.log(token);
-    return res
-      .status(401)
-      .json({ message: "Token invalid!" });
-  }
+		req.usuario = usuario;
+		next();
+	} catch (error) {
+		console.log(error);
+		return res.status(401).json({ message: "Token inválido." });
+	}
 };
 
 module.exports = {
-  validarJwt,
+	validarJwt,
 };
 
+// const { request, response } = require("express");
+// const jwt = require("jsonwebtoken");
+// const { Usuario } = require("../models");
+
+// const validarJwt = async (req = request, res = response, next) => {
+// 	const token = req.header("x-token");
+// 	const { id } = req.params; // id user to delete
+// 	const { method, originalUrl } = req;
+
+// 	if (!token) {
+// 		return res.status(401).json({ message: "No hay token en la petición." });
+// 	}
+
+// 	try {
+// 		// Valida de TOKEN generados en login con pass (ENCRIPTADOS)
+// 		const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
+
+// 		if (method === "DELETE" && originalUrl.includes("/api/users/")) {
+// 			const [usuario, userToDelete] = await Promise.all([
+// 				Usuario.findById(uid),
+// 				Usuario.findById(id),
+// 			]);
+// 			console.log(usuario, userToDelete);
+// 			if (!userToDelete || !userToDelete.estado) {
+// 				return res
+// 					.status(401)
+// 					.json({ message: "Id no válido - usuario no existe en la DB." });
+// 			}
+
+// 			if (!usuario || !usuario.estado) {
+// 				return res
+// 					.status(401)
+// 					.json({ message: "Token inválido - estado del usuario." });
+// 			}
+
+// 			req.usuario = usuario;
+// 		} if (method === "POST" && originalUrl.includes("/api/categorias")) {
+// 			const usuario = await Usuario.findById(uid);
+// 			req.usuario = usuario;
+// 		} else {
+// 			// Manejar cualquier otro tipo de petición o URL no esperada
+// 			return res.status(400).json({ error: "Petición inválida." });
+// 		}
+
+// 		next();
+// 	} catch (error) {
+// 		console.log(error);
+// 		return res.status(401).json({ message: "Token inválido." });
+// 	}
+// };
+
+// module.exports = {
+// 	validarJwt,
+// };

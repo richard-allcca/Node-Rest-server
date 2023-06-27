@@ -2,9 +2,7 @@ const { Usuario, Categoria, Producto, Role } = require("../models");
 
 const helperValidatorNumber = (value) => {
   let convert = Number(value);
-  if (!isNaN(convert)) {
-    return `El "${value}" no es un número válido`;
-  }
+  if (!isNaN(convert)) return `El "${value}" no es un número válido`;
 };
 
 // POST

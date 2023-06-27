@@ -48,10 +48,8 @@ class Server {
     this.app.use(express.json());
 
     // Directorio publico, se muestra con localhost:8085
-    // this.app.use(express.static("public"));
-
-    // REVIEW - en caso necesites que detect otros files no solo index.html
     // this.app.use(express.static("public",{extensions: ["html","css","js"]}));
+    this.app.use(express.static("public"));
 
     this.app.use(fileUpload({ // Carga de archivos
       useTempFiles: true,

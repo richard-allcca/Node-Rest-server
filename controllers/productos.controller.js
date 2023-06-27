@@ -22,8 +22,8 @@ const obtenerProductos = async (req, res = response) => {
 const obtenerProducto = async (req, res = response) => {
   const { id } = req.params;
   const producto = await Producto.findById(id)
-    .populate("usuario", "nombre")
-    .populate("categoria", "nombre");
+    .populate("usuario", "nombre") // trae el usuario que creo el product
+    .populate("categoria", "nombre"); // trae la categoria del product
 
   if (!producto) {
     return res.status(404).json({
@@ -61,11 +61,15 @@ const actualizarProducto = async (req, res = response) => {
   const { estado, usuario, ...data } = req.body;
 
   if (data.nombre) {
-    data.nombre = body.nombre.toUpperCase();
+    data.nombre = data.nombre.toUpperCase();
   }
   data.usuario = req.usuario._id;
 
-  const producto = await Producto.findByIdAndUpdate(id, data, { new: true });
+  const producto = await Producto.findByIdAndUpdate(
+    id,
+    data,
+    { new: true }// retorna el objeto actualizado
+  );
 
   //? validación opcional
   if (!producto) {
