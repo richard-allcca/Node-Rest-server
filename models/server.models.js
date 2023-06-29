@@ -51,7 +51,8 @@ class Server {
     // this.app.use(express.static("public",{extensions: ["html","css","js"]}));
     this.app.use(express.static("public"));
 
-    this.app.use(fileUpload({ // Carga de archivos
+    // Carga de archivos
+    this.app.use(fileUpload({ 
       useTempFiles: true,
       tempFileDir: "./tmp",
       createParentPath: true,

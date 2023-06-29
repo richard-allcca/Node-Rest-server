@@ -6,26 +6,17 @@ const extensionesImg = ["png", "jpg", "gif", "jpeg"];
 
 /**
  * It takes a file, validates it, and then saves it to a folder.
- *
- * extensionesValidas is an array of valid file extensions.
- *
- * The function returns a promise.
- *
- * The promise resolves with the name of the file.
- *
- * subirArchivo(files, extensionesValidas, carpeta)
- *
  * @param files - The files object that is passed to the function.
- * @param [extensionesValidas] - The valid extensions for the file.
+ * @param [extensionesValidas] - [] of the valid extensions for the file.
  * @param [carpeta] - The folder where the file will be saved.
- * @returns a promise.
+ * @returns a promise whith the file name
  */
-const subirArchivo = (files, extensionesValidas = extensionesImg, carpeta = '') => {
+const uploadFile = (files, extensionesValidas = extensionesImg, carpeta = '') => {
 
-  const { archivo } = files;
 
   return new Promise((resolve, reject) => {
 
+    const { archivo } = files;
     // extraer la extencion del archivo
     const nombreCortado = archivo.name.split(".");
     const extension = nombreCortado[nombreCortado.length - 1];
@@ -38,12 +29,13 @@ const subirArchivo = (files, extensionesValidas = extensionesImg, carpeta = '') 
     // cambiar nombre del archivo
     const nombreCreado = `${uuid()}.${extension}`;
 
-    // crear el path para guardar el archivo
+    // create the path where to save
     const uploadPath = path.join(__dirname, '../uploads/', carpeta, nombreCreado);
 
+    // save file
     archivo.mv(uploadPath, (err) => {
       if (err) {
-        //? reject(err) pendiente de uso
+        //  reject(err)
         reject({
           ok: false,
           msg: "Error al subir el archivo",
@@ -52,11 +44,9 @@ const subirArchivo = (files, extensionesValidas = extensionesImg, carpeta = '') 
 
       resolve(nombreCreado);
     });
-
-
   });
 };
 
 module.exports = {
-  subirArchivo,
+  uploadFile,
 };
