@@ -47,7 +47,7 @@ const login = async (req, res = response) => {
 
 const GoogleSingIn = async (req, res = response) => {
   const { id_token } = req.body;
-  // console.log("id-token", id_token)
+
   try {
     const { nombre, img, correo } = await googleVerify(id_token);
 
@@ -88,7 +88,9 @@ const GoogleSingIn = async (req, res = response) => {
   }
 };
 
+// chat
 const renovarToken = async (req, res = response) => {
+
   const { usuario } = req;
 
   // Generar nuevo token

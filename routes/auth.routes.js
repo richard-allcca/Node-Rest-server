@@ -11,6 +11,7 @@ const {
 
 const router = Router();
 
+// Login con Email y Password
 router.post(
   "/login",
   [
@@ -21,6 +22,7 @@ router.post(
   login
 );
 
+// Login con google
 router.post(
   "/google",
   [
@@ -30,6 +32,7 @@ router.post(
   GoogleSingIn
 );
 
+// Renovar token para chat
 router.get(
   "/",
   [

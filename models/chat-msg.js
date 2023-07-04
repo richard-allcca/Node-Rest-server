@@ -1,5 +1,3 @@
-
-
 class Mensaje {
   constructor(uid, nombre, mensaje) {
     this.uid = uid;
@@ -9,7 +7,6 @@ class Mensaje {
   }
 }
 
-
 class ChatMsg {
   constructor() {
     this.mensajes = [];
@@ -17,7 +14,6 @@ class ChatMsg {
   }
 
   get ultimosMensajes() {
-    // TODO: reparar esto 
     this.mensajes = this.mensajes.splice(0, 10);
     return this.mensajes;
   }
@@ -32,6 +28,7 @@ class ChatMsg {
     );
   }
 
+  // indexado de usuarios
   agregarUsuario(usuario) {
     this.usuarios[usuario.id] = usuario;
   }

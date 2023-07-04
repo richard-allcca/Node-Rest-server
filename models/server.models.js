@@ -42,9 +42,10 @@ class Server {
   }
 
   middleware() {
+    // Evita erroes corss origin en los navegadores
     this.app.use(cors());
 
-    // serializa data del body en POST, PUT para uso en controladores con req
+    // Serializa data del body en las peticiones para uso en controladores con req
     this.app.use(express.json());
 
     // Directorio publico, se muestra con localhost:8085
@@ -52,7 +53,7 @@ class Server {
     this.app.use(express.static("public"));
 
     // Carga de archivos
-    this.app.use(fileUpload({ 
+    this.app.use(fileUpload({
       useTempFiles: true,
       tempFileDir: "./tmp",
       createParentPath: true,
@@ -69,6 +70,7 @@ class Server {
   }
 
   socket() {
+    // Paso de socket e io al controlador
     this.io.on("connection", (socket) => socketController(socket, this.io));
   }
 
@@ -80,13 +82,3 @@ class Server {
 }
 
 module.exports = Server;
-// Notas:
-// - el constructor ejecuta los metodos al crear una instancia de esta clase en "app"
-
-// middleware:
-// 1. cors => evita erroes corss origin en los navegadores
-// 2. express.json() => cualquier data de put,push o delete la serializa a json
-// 3. express.static() => utiliza la carpeta public para renderizar html
-
-// routes:
-// - utiliza las rutas definidas en "routes"

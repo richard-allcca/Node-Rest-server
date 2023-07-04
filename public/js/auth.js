@@ -1,12 +1,11 @@
 const $formulario = document.querySelector("form");
 
-console.log(window.location.hostname.includes("localhost"));
-
-var url = window.location.hostname.includes("localhost")
+const url = window.location.hostname.includes("localhost")
   ? "http://localhost:8085/api/auth/"
   : "https://api-rest-cafe-node.herokuapp.com/api/auth/google";
 
 
+// Login con email and pass
 $formulario.addEventListener("submit", (e) => {
   e.preventDefault();
   const formData = {
@@ -22,16 +21,17 @@ $formulario.addEventListener("submit", (e) => {
     .then((resp) => resp.json())
     .then((data) => {
       const { token, msg } = data;
-      if (msg) console.log(msg);
 
+      // Almacena token en ls para socket
       localStorage.setItem("token", token);
       window.location = "chat.html";
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log({err}));
 });
 
-
+// Login width google
 function onSignIn2(googleUser) {
+
   // var profile = googleUser.getBasicProfile();
   // console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
   // console.log('Name: ' + profile.getName());
@@ -48,8 +48,9 @@ function onSignIn2(googleUser) {
   })
     .then((resp) => resp.json())
     .then((data) => {
-      console.log(data);
       const { token } = data;
+
+      // Almacena token en ls para socket
       localStorage.setItem("token", token);
       window.location = "chat.html";
     })
