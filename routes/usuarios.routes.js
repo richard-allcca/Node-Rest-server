@@ -27,7 +27,7 @@ const {
 const router = Router();
 
 // NOTE
-// midlewares: mas de 1 se declaran en []
+// middlewares: mas de 1 se declaran en []
 
 router.get("/:nombre", UsuariosGetOne);
 
@@ -43,7 +43,7 @@ router.post(
   "/",
   [
     check("nombre", "El Nombre es Obligatorio").not().isEmpty(),
-    check("password", "Password minimo 6 caracteres").isLength({ min: 6 }),
+    check("password", "Password mínimo 6 caracteres").isLength({ min: 6 }),
     check("correo").custom(helperValidatorEmail),
     check("rol").custom(helperValidatorRol),
     validarCampos,

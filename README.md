@@ -35,6 +35,7 @@
 - npm i uuid
 - npm i google-auth-library --save
 - npm i cloudinary
+- npm i jsonwebtoken
 
 ## Enlaces Recursos
 

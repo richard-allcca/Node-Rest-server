@@ -7,7 +7,7 @@ const {
   buscarProductos,
 } = require("../helpers/helpers.busquedas");
 
-// Categorias permitidas
+// Categorías permitidas
 const coleccionesPermitidas = ["usuarios", "categorias", "productos", "roles"];
 
 // ==========================================================

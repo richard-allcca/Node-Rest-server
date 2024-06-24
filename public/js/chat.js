@@ -11,7 +11,7 @@ const $bntSalir = document.getElementById("bntSalir");
 let usuario = null;
 let socket = null;
 
-// Validad token en localstorage
+// Validad token en localStorage
 const validarJwt = async () => {
 	const token = localStorage.getItem("token") || "";
 
