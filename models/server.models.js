@@ -5,7 +5,7 @@ const { createServer } = require("http");
 
 require("dotenv").config();
 
-// connfig db
+// config db
 const { dbConnection } = require("../database/config.db");
 const socketController = require("../sockets/controller.socket");
 
@@ -42,7 +42,7 @@ class Server {
   }
 
   middleware() {
-    // Evita erroes corss origin en los navegadores
+    // Evita errores cors origin en los navegadores
     this.app.use(cors());
 
     // Serializa data del body en las peticiones para uso en controladores con req

@@ -27,13 +27,13 @@ const helperValidatorPassword = async (password) => {
     throw new Error(`El password: " ${password} " es incorrecto`);
 };
 
-// Verfica ID valido de mongo para Categoria
+// Verifica ID valido de mongo para Categoría
 const helperValidatorIdMongoCategoria = async (id) => {
   const findCategoria = await Categoria.findById(id);
   if (!findCategoria) throw new Error(`La categoria: " ${id} " no existe`);
 };
 
-// Verfica ID valido de mongo para Producto
+// Verifica ID valido de mongo para Producto
 const helperValidatorIdMongoProducto = async (id) => {
   const findProducto = await Producto.findById(id);
   if (!findProducto) throw new Error(`El Producto: " ${id} " no existe`);

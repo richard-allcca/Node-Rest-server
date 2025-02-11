@@ -10,9 +10,9 @@ const { uploadFile } = require("../helpers");
 
 
 const cargarArchivo = async (req, res = response) => {
-	// REVIEW - no esta claro la utilidad de ese controldoe si ya tengo la carga de imagen en las colecciones respectivas
+	// REVIEW - no esta claro la utilidad de ese controlador si ya tengo la carga de imagen en las colecciones respectivas
 	try {
-		// subirArchivo, puede recibir 3 parametros el 1° es el archivo (obligatorio)
+		// subirArchivo, puede recibir 3 parámetros el 1° es el archivo (obligatorio)
 		const nameFileSave = await uploadFile(req.files);
 
 		res.json({
@@ -27,12 +27,13 @@ const cargarArchivo = async (req, res = response) => {
 	}
 };
 
+// Actualizar imagen en la colección de usuarios y productos
 const actualizarImagen = async (req, res = response) => {
 	const { id, coleccion } = req.params;
 
 	let modelo;
 
-	// valida id de img en su coleccion respectiva (usuarios, productos)
+	// valida id de img en su colección respectiva (usuarios, productos)
 	switch (coleccion) {
 		case "usuarios":
 			modelo = await Usuario.findById(id);
@@ -182,11 +183,11 @@ const actualizarImagenCloudinary = async (req, res = response) => {
 			});
 	}
 
-	// Eliminar imagenes previas extrayendo el public_id
+	// Eliminar imágenes previas extrayendo el public_id
 	if (modelo.img) {
 		const nombreArr = modelo.img.split("/");
 		const nombre = nombreArr[nombreArr.length - 1];
-		const [public_id] = nombre.split(".");//vuelve a cortar y destructurar la 1°
+		const [public_id] = nombre.split(".");//vuelve a cortar y des-estructurar la 1°
 
 		cloudinary.uploader.destroy(public_id);
 	}
@@ -196,7 +197,7 @@ const actualizarImagenCloudinary = async (req, res = response) => {
 	const resp = await cloudinary.uploader.upload(tempFilePath);
 	const { secure_url } = resp;
 
-	// Agraga url de la img al modelo (Usuario - Product)
+	// Agrega url de la img al modelo (Usuario - Product)
 	modelo.img = secure_url;
 
 	await modelo.save();

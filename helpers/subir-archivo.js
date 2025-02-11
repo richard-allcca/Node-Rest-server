@@ -9,7 +9,7 @@ const extensionesImg = ["png", "jpg", "gif", "jpeg"];
  * @param files - The files object that is passed to the function.
  * @param [extensionesValidas] - [] of the valid extensions for the file.
  * @param [carpeta] - The folder where the file will be saved.
- * @returns a promise whith the file name
+ * @returns a promise with the file name
  */
 const uploadFile = (files, extensionesValidas = extensionesImg, carpeta = '') => {
 
@@ -17,7 +17,7 @@ const uploadFile = (files, extensionesValidas = extensionesImg, carpeta = '') =>
   return new Promise((resolve, reject) => {
 
     const { archivo } = files;
-    // extraer la extencion del archivo
+    // extraer la extension del archivo
     const nombreCortado = archivo.name.split(".");
     const extension = nombreCortado[nombreCortado.length - 1];
 
@@ -32,7 +32,7 @@ const uploadFile = (files, extensionesValidas = extensionesImg, carpeta = '') =>
     // create the path where to save
     const uploadPath = path.join(__dirname, '../uploads/', carpeta, nombreCreado);
 
-    // save file
+    // Move and save file
     archivo.mv(uploadPath, (err) => {
       if (err) {
         //  reject(err)
